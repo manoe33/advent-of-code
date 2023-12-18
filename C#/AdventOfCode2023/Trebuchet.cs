@@ -1,13 +1,13 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode2023
+namespace AdventOfCode2023.Trebuchet
 {
     public static class Trebuchet
     {
         public static void Fire()
         {
             Console.WriteLine("Firing trebuchet!");
-            string[] lines = File.ReadAllLines("input.txt");
+            string[] lines = File.ReadAllLines("trebuchet/input.txt");
             int answer = CalculateCoordinates(lines);
 
             Console.WriteLine($"Answer: {answer}");
