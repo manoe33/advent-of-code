@@ -1,4 +1,5 @@
 using AdventOfCode2023;
+using AdventOfCode2023.Trebuchet;
 using Xunit;
 
 namespace AdventOfCode2023Tests
