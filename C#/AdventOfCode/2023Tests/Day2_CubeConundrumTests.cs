@@ -6,6 +6,69 @@ namespace AdventOfCode._2023Tests
     public class Day2_CubeConundrumTests
     {
         [Fact]
+        public void GetSum_ShouldReturnCorrectSum()
+        {
+            // Arrange
+            Day2_CubeConundrum.Games.Clear();
+            Day2_CubeConundrum.Games.AddRange(new List<Game>()
+            {
+                // game where all sets are have enough cubes
+                new Game(1)
+                {
+                    Sets = new()
+                    {
+                        new() { Cubes = new() {  { "blue", 1 },{ "red", 1 } } },
+                        new() { Cubes = new() { { "red", 10 } } },
+                        new() { Cubes = new() { { "red", 8 }, { "blue", 1 }, { "green", 1 } } },
+                        new() { Cubes = new() { { "green", 1 }, { "blue", 5 } } }
+                    }
+                },
+                // game where some sets are have enough cubes
+                new Game(16)
+                {
+                    Sets = new()
+                    {
+                        new() { Cubes = new() {  { "blue", 1 },{ "red", 1 } } },
+                        new() { Cubes = new() { { "red", 20 } } },
+                        new() { Cubes = new() { { "red", 8 }, { "blue", 1 }, { "green", 1 } } },
+                        new() { Cubes = new() { { "green", 1 }, { "blue", 5 } } }
+                    }
+                },
+                // game where some sets are have enough cubes
+                new Game(48)
+                {
+                    Sets = new()
+                    {
+                        new() { Cubes = new() {  { "blue", 1 },{ "red", 1 } } },
+                        new() { Cubes = new() { { "red", 20 } } },
+                        new() { Cubes = new() { { "red", 18 }, { "blue", 1 }, { "green", 1 } } },
+                        new() { Cubes = new() { { "green", 1 }, { "blue", 5 } } }
+                    }
+                },
+                // game where no sets are have enough cubes
+                new Game(67)
+                {
+                    Sets = new()
+                    {
+                        new() { Cubes = new() {  { "blue", 99 },{ "red", 30 } } },
+                        new() { Cubes = new() { { "red", 17 } } },
+                        new() { Cubes = new() { { "red", 18 }, { "blue", 49 }, { "green", 76 } } },
+                        new() { Cubes = new() { { "green", 100 }, { "blue", 56 } } }
+                    }
+                }
+            });
+
+
+            var expected = 1+ 16 + 48;
+
+            // Act
+            var result = Day2_CubeConundrum.GetSum();
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
         public void CreateGame_ShouldReturnGame()
         {
             // Arrange
@@ -205,10 +268,7 @@ namespace AdventOfCode._2023Tests
         public void HasEnoughCubesInTotal_ShouldReturnFalse_WhenNotEnoughCubesInTotal()
         {
             // Arrange
-            var set = new Set();
-            set.Cubes.Add("red", 15);
-            set.Cubes.Add("green", 20);
-            set.Cubes.Add("blue", 25);
+            var set = new Set() { Cubes = new() { { "red", 15 }, { "green", 20 }, { "blue", 25 } } };
 
             // Act
             var result = set.HasEnoughCubesInTotal();

@@ -21,12 +21,16 @@ namespace AdventOfCode._2023
 
             GetGames(lines);
 
-            var sum = Games
-                .Where(game => game.IsPossible())
-                .Sum(game => game.Id);
+            Console.WriteLine($"Answer: {GetSum()}");  // 4673 = too high
+        }
 
+        public static int GetSum()
+        {
+            // oh wait!! Al sets should be possible
+            var possibleGames = Games.Where(game => game.IsPossible());
+            var sum = possibleGames.Sum(game => game.Id);
 
-            Console.WriteLine($"Answer: {sum}");  // 4673 = too high
+            return sum;
         }
 
         public static void GetGames(string[] lines)
