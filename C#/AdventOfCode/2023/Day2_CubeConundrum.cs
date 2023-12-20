@@ -13,11 +13,15 @@
             string[] lines = File.ReadAllLines("inputs/day2.txt");
 
             GetGames(lines);
+
+            // now the games are all set and it's time for the exercise
+
             var bla = "";
         }
 
-        private static void GetGames(string[] lines)
+        public static void GetGames(string[] lines)
         {
+            // line = "Game 1: 1 blue, 1 red; 10 red; 8 red, 1 blue, 1 green; 1 green, 5 blue"
             foreach (var line in lines)
             {
                 Console.WriteLine(line);
@@ -25,7 +29,7 @@
             }
         }
 
-        private static Game CreateGame(string line)
+        public static Game CreateGame(string line)
         {
             var idSplit = line.Replace("Game ", "").Split(": ");
             var id = int.Parse(idSplit[0]);
