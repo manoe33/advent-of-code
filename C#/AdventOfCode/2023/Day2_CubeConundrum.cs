@@ -16,12 +16,10 @@ namespace AdventOfCode._2023
 
         public static void Solve()
         {
-            Console.WriteLine("Solving cube conundrum!");
             string[] lines = File.ReadAllLines("inputs/day2.txt");
-
             GetGames(lines);
 
-            Console.WriteLine($"Answer: {GetSum()}");  // 4673 = too high
+            Console.WriteLine($"Answer: {GetSum()}");  // 2439
         }
 
         public static int GetSum()
@@ -37,10 +35,7 @@ namespace AdventOfCode._2023
         {
             // line = "Game 1: 1 blue, 1 red; 10 red; 8 red, 1 blue, 1 green; 1 green, 5 blue"
             foreach (var line in lines)
-            {
-                Console.WriteLine(line);
                 Games.Add(CreateGame(line));
-            }
         }
 
         public static Game CreateGame(string line)
@@ -89,78 +84,48 @@ namespace AdventOfCode._2023
 
         public Game(int id) => Id = id;
 
-        public bool IsPossible() => Sets.Exists(set => set.HasEnoughCubesInTotal());
+        //public bool IsPossible() => Sets.Exists(set => set.HasEnoughCubesInTotal());
+        public bool IsPossible() => Sets.TrueForAll(set => set.HasEnoughCubesInTotal());
     }
 
     public class Set
     {
         public Dictionary<string, int> Cubes { get; set; } = new();
 
-        public bool HasEnoughRedCubes() => Cubes.Where(cube => cube.Key == "red").Any(cube => cube.Value <= Day2_CubeConundrum.AmountOfRedCubes);
+        public bool HasEnoughRedCubes()
+        {
+            var cubes = GetCubesByColor("red");
 
-        public bool HasEnoughGreenCubes() => Cubes.Where(cube => cube.Key == "green").Any(cube => cube.Value <= Day2_CubeConundrum.AmountOfGreenCubes);
+            if (cubes.ToList().Count > 0)
+                return cubes.Any(cube => HasEnoughCubesForColor(cube, Day2_CubeConundrum.AmountOfRedCubes));
+            else
+                return true;
+        }
 
-        public bool HasEnoughBlueCubes() => Cubes.Where(cube => cube.Key == "blue").Any(cube => cube.Value <= Day2_CubeConundrum.AmountOfBlueCubes);
+        public bool HasEnoughGreenCubes()
+        {
+            var cubes = GetCubesByColor("green");
+
+            if (cubes.ToList().Count > 0)
+                return cubes.Any(cube => HasEnoughCubesForColor(cube, Day2_CubeConundrum.AmountOfGreenCubes));
+            else
+                return true;
+        }
+
+        public bool HasEnoughBlueCubes()
+        {
+            var cubes = GetCubesByColor("blue");
+
+            if (cubes.ToList().Count > 0)
+                return cubes.Any(cube => HasEnoughCubesForColor(cube, Day2_CubeConundrum.AmountOfBlueCubes));
+            else
+                return true;
+        }
+
+        public IEnumerable<KeyValuePair<string, int>> GetCubesByColor(string color) => Cubes.Where(cube => cube.Key == color);
+
+        public static bool HasEnoughCubesForColor(KeyValuePair<string, int> cube, int amount) => cube.Value <= amount;
 
         public bool HasEnoughCubesInTotal() => HasEnoughRedCubes() && HasEnoughGreenCubes() && HasEnoughBlueCubes();
     }
-
-    //public static void Solve()
-    //{
-    //    Console.WriteLine("Solving cube conundrum!");
-    //    string[] lines = File.ReadAllLines("inputs/day2.txt");
-    //    int answer = CalculateChecksum(lines);
-
-    //    Console.WriteLine($"Answer: {answer}");  // 56465
-    //}
-
-    //public static int CalculateChecksum(string[] lines)
-    //{
-    //    var answer = 0;
-
-    //    foreach (var line in lines)
-    //    {
-    //        var digits = ExtractDigits(line);
-    //        var checksum = CalculateChecksum(digits);
-    //        answer += checksum;
-    //    }
-
-    //    return answer;
-    //}
-
-    //public static int CalculateChecksum(int[] digits)
-    //{
-    //    var checksum = 0;
-    //    var min = digits[0];
-    //    var max = digits[0];
-
-    //    foreach (var digit in digits)
-    //    {
-    //        if (digit < min)
-    //        {
-    //            min = digit;
-    //        }
-
-    //        if (digit > max)
-    //        {
-    //            max = digit;
-    //        }
-    //    }
-
-    //    checksum = max - min;
-    //    return checksum;
-    //}
-
-    //public static int[] ExtractDigits(string line)
-    //{
-    //    var digits = line.Split("\t");
-    //    var numbers = new int[digits.Length];
-
-    //    for (int i = 0; i < digits.Length; i++)
-    //    {
-    //        numbers[i] = int.Parse(digits[i]);
-    //    }
-
-    //    return numbers;
-    //}
 }

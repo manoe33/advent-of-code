@@ -34,14 +34,14 @@ namespace AdventOfCode._2023Tests
                         new() { Cubes = new() { { "green", 1 }, { "blue", 5 } } }
                     }
                 },
-                // game where some sets are have enough cubes
+                // game where all sets are have enough cubes
                 new Game(48)
                 {
                     Sets = new()
                     {
                         new() { Cubes = new() {  { "blue", 1 },{ "red", 1 } } },
-                        new() { Cubes = new() { { "red", 20 } } },
-                        new() { Cubes = new() { { "red", 18 }, { "blue", 1 }, { "green", 1 } } },
+                        new() { Cubes = new() { { "red", 3 } } },
+                        new() { Cubes = new() { { "red", 11 }, { "blue", 13 }, { "green", 1 } } },
                         new() { Cubes = new() { { "green", 1 }, { "blue", 5 } } }
                     }
                 },
@@ -59,7 +59,7 @@ namespace AdventOfCode._2023Tests
             });
 
 
-            var expected = 1+ 16 + 48;
+            var expected = 1 + 48;
 
             // Act
             var result = Day2_CubeConundrum.GetSum();
@@ -137,11 +137,19 @@ namespace AdventOfCode._2023Tests
         }
 
         [Fact]
-        public void IsPossible_ShouldReturnTrue_WhenSetsHaveEnoughCubes()
+        public void IsPossible_ShouldReturnTrue_WhenAllSetsHaveEnoughCubes()
         {
             // Arrange
-            var game = new Game(1);
-            game.Sets.Add(new() { Cubes = new() {  { "red", 2 },{ "green", 3 }, { "blue", 4 } } });
+            var game = new Game(1)
+            {
+                Sets = new()
+                {
+                    new() { Cubes = new() {  { "blue", 1 },{ "red", 1 } } },
+                    new() { Cubes = new() { { "red", 10 } } },
+                    new() { Cubes = new() { { "red", 8 }, { "blue", 1 }, { "green", 1 } } },
+                    new() { Cubes = new() { { "green", 1 }, { "blue", 5 } } }
+                }
+            };
 
             // Act
             var result = game.IsPossible();
@@ -151,7 +159,7 @@ namespace AdventOfCode._2023Tests
         }
 
         [Fact]
-        public void IsPossible_ShouldReturnFalse_WhenSetsDoNotHaveEnoughCubes()
+        public void IsPossible_ShouldReturnFalse_WhenSomeSetsDoNotHaveEnoughCubes()
         {
             // Arrange
             var game = new Game(1);
