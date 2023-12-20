@@ -6,22 +6,6 @@ namespace AdventOfCode._2023Tests
     public class Day2_CubeConundrumTests
     {
         [Fact]
-        public void CreateSet_ShouldReturnSetWithCubes()
-        {
-            // Arrange
-            string set = "24 blue, 1 red";
-
-            // Act
-            var result = Day2_CubeConundrum.CreateSet(set);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Cubes.Count);
-            Assert.Contains(result.Cubes, cube => cube.Key == "blue" && cube.Value == 24);
-            Assert.Contains(result.Cubes, cube => cube.Key == "red" && cube.Value == 1);
-        }
-
-        [Fact]
         public void CreateGame_ShouldReturnGame()
         {
             // Arrange
@@ -41,6 +25,36 @@ namespace AdventOfCode._2023Tests
         }
 
         [Fact]
+        public void CreateSet_ShouldReturnSetWithCubes()
+        {
+            // Arrange
+            string set = "24 blue, 1 red";
+
+            // Act
+            var result = Day2_CubeConundrum.CreateSet(set);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Cubes.Count);
+            Assert.Contains(result.Cubes, cube => cube.Key == "blue" && cube.Value == 24);
+            Assert.Contains(result.Cubes, cube => cube.Key == "red" && cube.Value == 1);
+        }
+
+        [Fact]
+        public void CreateCube_ShouldReturnTupleWithCorrectCubeColorAndAmount()
+        {
+            // Arrange
+            string cube = "2 red";
+
+            // Act
+            var result = Day2_CubeConundrum.CreateCube(cube);
+
+            // Assert
+            Assert.Equal("red", result.Item1);
+            Assert.Equal(2, result.Item2);
+        }
+
+        [Fact]
         public void GetGames_ShouldAddGamesToList()
         {
             // Arrange
@@ -57,6 +71,34 @@ namespace AdventOfCode._2023Tests
             Assert.Equal(2, Day2_CubeConundrum.Games.Count);
             Assert.Equal(1, Day2_CubeConundrum.Games[0].Id);
             Assert.Equal(4, Day2_CubeConundrum.Games[1].Sets.Count);
+        }
+
+        [Fact]
+        public void IsPossible_ShouldReturnTrue_WhenSetsHaveEnoughCubes()
+        {
+            // Arrange
+            var game = new Game(1);
+            game.Sets.Add(new() { Cubes = new() {  { "red", 2 },{ "green", 3 }, { "blue", 4 } } });
+
+            // Act
+            var result = game.IsPossible();
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsPossible_ShouldReturnFalse_WhenSetsDoNotHaveEnoughCubes()
+        {
+            // Arrange
+            var game = new Game(1);
+            game.Sets.Add(new() { Cubes = new() { { "red", 17 }, { "green", 5 }, { "blue", 2 } } });
+
+            // Act
+            var result = game.IsPossible();
+
+            // Assert
+            Assert.False(result);
         }
 
         [Fact]
