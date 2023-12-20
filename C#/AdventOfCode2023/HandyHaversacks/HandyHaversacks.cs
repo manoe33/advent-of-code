@@ -1,60 +1,68 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json;
-
-namespace AdventOfCode2023.HandyHaversacks
+﻿namespace AdventOfCode2023.HandyHaversacks
 {
     public static class HandyHaversacks
     {
-
+        public static List<Bag> OuterBags { get; set; } = new();
 
         public static void Count()
         {
             //Console.WriteLine("Handy Haversacks!");
-            //string[] lines = File.ReadAllLines("handyhaversacks/input-jeroen.txt");
-            string[] lines = File.ReadAllLines("handyhaversacks/input-manoe.txt");
-
-            var outerBags = new List<Bag>();
+            string[] lines = File.ReadAllLines("handyhaversacks/input-jeroen.txt");
+            //string[] lines = File.ReadAllLines("handyhaversacks/input-manoe.txt");
 
             foreach (var line in lines)
             {
-                //Console.WriteLine(line);
-                //dull bronze bags contain [2 muted white bags, 2 faded orange bags, 1 plaid blue bag].
-                //var bagType = [2 muted white, 2 faded orange, 1 plaid blue].
-                // 2mutedwhite
-                //mutedwhite
                 var bag = new Bag();
-                //bag.BagType =
                 var splitOnContain = line.Split("contain");
+                // For example: new Bag { BagType = "light red" }
                 bag.BagType = splitOnContain[0].Replace("bags", "").Trim();
 
                 foreach (var part in splitOnContain[1].Split(","))
                 {
+                    // For example: part = " 2 muted yellow bags"
+                    // For example: bagType = "2 muted yellow"
                     var bagType = part.Replace("bags", "").Replace("bag", "").Replace(".", "").Trim();
                     if (bagType == "no other")
                     {
                         continue;
                     }
-                    //var bagCount = bagType.Substring(0, 1);
+                    // For example: bagType = "muted yellow"
                     bagType = bagType.Substring(1).Trim();
-                    //Console.WriteLine($"BagType: {bagType} BagCount: {bagCount}");
-                    // hier roepen we dalijk iets recursiefs aan om de bags te vullen
-                    // check eerst of die al in de lijst staat
 
-                    // first check if bagType already exists in bags
-
-
-
-                    //Console.WriteLine($"BagType: {bagType}");
+                    // Add new bag to list of innerBags, and set the type
                     bag.Bags.Add(new Bag { BagType = bagType });
                 }
 
-                outerBags.Add(bag);
-                Console.WriteLine($"BagType: {bag.BagType}, Bags: {bag.ToString()}");
+                // Add the outerbag to the list of outerbags
+                OuterBags.Add(bag);
 
-                // loop through the remaining line string
+                var processedBags = OuterBags.SelectMany(bag => bag.GetInnerBags());
+                var existingBags = processedBags.Where(x => x.BagType == bag.BagType).ToList();
+                //existingBag.Bags = bag.Bags.ConvertAll<Bag>();
+
+                foreach(var existingBag in existingBags)
+                {
+                    existingBag.Bags = bag.Bags.ConvertAll<Bag>(x => new Bag { BagType = x.BagType, Bags = x.Bags });
+                }
 
 
+                // todo: check if bag.BagType already exists
+                //OuterBags.SelectMany(x => x.)
+
+                // todo: de kinderen hebben nog geen bags. Deze moet je nog toevoegen, hoe dan?
+                // Ofja, de kinderen hebben wel bags, maar die zit nog in de outerbags.
+                // Dus dan moet je in de outerbags zoeken of die er al bijzit en dan de kinderen overnemen. Gaat nergens meer v
+                Console.WriteLine($"BagType: {bag.BagType}, Bags: {bag}");
             }
+
+            var count = (from bag in OuterBags
+                         where bag.ContainsBagType("shiny gold")
+                         select bag).Count();
+
+            var count2 = OuterBags.Select(x => x.ContainsBagType("shiny gold")).Count();
+
+            Console.WriteLine($"Answer: {count}");
+            Console.WriteLine($"Answer2: {count2}"); // 594 = wrong
         }
     }
 }
