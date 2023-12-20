@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Linq;
-
-namespace AdventOfCode._2023
+﻿namespace AdventOfCode._2023
 {
     public static class Day2_CubeConundrum
     {
