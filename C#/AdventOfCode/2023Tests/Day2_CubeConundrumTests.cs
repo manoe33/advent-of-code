@@ -6,7 +6,7 @@ namespace AdventOfCode._2023Tests
     public class Day2_CubeConundrumTests
     {
         [Fact]
-        public void CreateSet_ShouldReturnSetWithCorrectCubes()
+        public void CreateSet_ShouldReturnSetWithCubes()
         {
             // Arrange
             string set = "24 blue, 1 red";
@@ -22,7 +22,7 @@ namespace AdventOfCode._2023Tests
         }
 
         [Fact]
-        public void CreateGame_ShouldWorkCorrectly()
+        public void CreateGame_ShouldReturnGame()
         {
             // Arrange
             var line = "Game 1: 23 blue, 1 red; 10 red; 8 red, 1 blue, 1 green; 1 green, 5 blue";
@@ -41,7 +41,7 @@ namespace AdventOfCode._2023Tests
         }
 
         [Fact]
-        public void GetGames_Should_AddGamesToList()
+        public void GetGames_ShouldAddGamesToList()
         {
             // Arrange
             string[] lines = new string[]
@@ -57,6 +57,122 @@ namespace AdventOfCode._2023Tests
             Assert.Equal(2, Day2_CubeConundrum.Games.Count);
             Assert.Equal(1, Day2_CubeConundrum.Games[0].Id);
             Assert.Equal(4, Day2_CubeConundrum.Games[1].Sets.Count);
+        }
+
+        [Fact]
+        public void HasEnoughRedCubes_ShouldReturnTrue_WhenEnoughRedCubes()
+        {
+            // Arrange
+            var set = new Set();
+            set.Cubes.Add("red", 10);
+
+            // Act
+            var result = set.HasEnoughRedCubes();
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void HasEnoughRedCubes_ShouldReturnFalse_WhenNotEnoughRedCubes()
+        {
+            // Arrange
+            var set = new Set();
+            set.Cubes.Add("red", 15);
+
+            // Act
+            var result = set.HasEnoughRedCubes();
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void HasEnoughGreenCubes_ShouldReturnTrue_WhenEnoughGreenCubes()
+        {
+            // Arrange
+            var set = new Set();
+            set.Cubes.Add("green", 5);
+
+            // Act
+            var result = set.HasEnoughGreenCubes();
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void HasEnoughGreenCubes_ShouldReturnFalse_WhenNotEnoughGreenCubes()
+        {
+            // Arrange
+            var set = new Set();
+            set.Cubes.Add("green", 20);
+
+            // Act
+            var result = set.HasEnoughGreenCubes();
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void HasEnoughBlueCubes_ShouldReturnTrue_WhenEnoughBlueCubes()
+        {
+            // Arrange
+            var set = new Set();
+            set.Cubes.Add("blue", 8);
+
+            // Act
+            var result = set.HasEnoughBlueCubes();
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void HasEnoughBlueCubes_ShouldReturnFalse_WhenNotEnoughBlueCubes()
+        {
+            // Arrange
+            var set = new Set();
+            set.Cubes.Add("blue", 25);
+
+            // Act
+            var result = set.HasEnoughBlueCubes();
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void HasEnoughCubesInTotal_ShouldReturnTrue_WhenEnoughCubesInTotal()
+        {
+            // Arrange
+            var set = new Set();
+            set.Cubes.Add("red", 10);
+            set.Cubes.Add("green", 5);
+            set.Cubes.Add("blue", 8);
+
+            // Act
+            var result = set.HasEnoughCubesInTotal();
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void HasEnoughCubesInTotal_ShouldReturnFalse_WhenNotEnoughCubesInTotal()
+        {
+            // Arrange
+            var set = new Set();
+            set.Cubes.Add("red", 15);
+            set.Cubes.Add("green", 20);
+            set.Cubes.Add("blue", 25);
+
+            // Act
+            var result = set.HasEnoughCubesInTotal();
+
+            // Assert
+            Assert.False(result);
         }
     }
 }

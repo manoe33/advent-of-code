@@ -90,8 +90,6 @@ namespace AdventOfCode._2023
 
     public class Set
     {
-        // todo: maybe I should it a dictonary? With the color as key and the amount as value?
-        //public List<Cube> Cubes { get; set; } = new();
         public Dictionary<string, int> Cubes { get; set; } = new();
 
         public bool HasEnoughRedCubes() => Cubes.Where(cube => cube.Key == "red").Any(cube => cube.Value <= Day2_CubeConundrum.AmountOfRedCubes);
@@ -102,36 +100,6 @@ namespace AdventOfCode._2023
 
         public bool HasEnoughCubesInTotal() => HasEnoughRedCubes() && HasEnoughGreenCubes() && HasEnoughBlueCubes();
     }
-
-    //public class Cube
-    //{
-    //    public int Amount { get; set; }
-
-    //    public string Color { get; set; }
-
-    //    public Cube(int amount, string color)
-    //    {
-    //        Amount = amount;
-    //        Color = color;
-    //    }
-
-    //    public bool HasColor(string color) => Color == color;
-
-    //    public bool HasEnoughRedCubes() => HasEnoughCubesByColor(Day2_CubeConundrum.AmountOfRedCubes);
-
-    //    public bool HasEnoughGreenCubes() => HasEnoughCubesByColor(Day2_CubeConundrum.AmountOfGreenCubes);
-
-    //    public bool HasEnoughBlueCubes() => HasEnoughCubesByColor(Day2_CubeConundrum.AmountOfBlueCubes);
-
-    //    public bool HasEnoughCubesByColor(int amount) => Amount <= amount;
-
-    //    public bool HasEnoughCubesInTotal() => HasEnoughRedCubes() && HasEnoughGreenCubes() && HasEnoughBlueCubes();
-    //}
-
-
-
-
-
 
     //public static void Solve()
     //{
