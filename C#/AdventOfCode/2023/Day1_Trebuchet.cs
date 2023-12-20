@@ -1,16 +1,16 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode2023.Trebuchet
+namespace AdventOfCode._2023
 {
-    public static class Trebuchet
+    public static class Day1_Trebuchet
     {
         public static void Fire()
         {
             Console.WriteLine("Firing trebuchet!");
-            string[] lines = File.ReadAllLines("trebuchet/input.txt");
+            string[] lines = File.ReadAllLines("inputs/day1.txt");
             int answer = CalculateCoordinates(lines);
 
-            Console.WriteLine($"Answer: {answer}");
+            Console.WriteLine($"Answer: {answer}");  // 56465
         }
 
         public static int CalculateCoordinates(string[] lines)

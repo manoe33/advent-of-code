@@ -1,16 +1,15 @@
-using AdventOfCode2023;
-using AdventOfCode2023.Trebuchet;
+using AdventOfCode._2023;
 using Xunit;
 
-namespace AdventOfCode2023Tests
+namespace AdventOfCode._2023Tests
 {
-    public class TrebuchetTests
+    public class Day1_TrebuchetTests
     {
         [Fact]
         public void ExtractDigits_ShouldReturnFirstAndLastDigitFromString()
         {
             string line = "1nine6oneeightnine5lfrzmzh7";
-            var digit = Trebuchet.ExtractDigits(line);
+            var digit = Day1_Trebuchet.ExtractDigits(line);
 
             Assert.Equal("17", digit);
         }
@@ -28,7 +27,7 @@ namespace AdventOfCode2023Tests
             };
 
             // Act
-            int result = Trebuchet.CalculateCoordinates(lines);
+            int result = Day1_Trebuchet.CalculateCoordinates(lines);
 
             // Assert
             Assert.Equal(142, result);
