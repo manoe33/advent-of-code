@@ -60,19 +60,19 @@ namespace AdventOfCode._2023
             foreach (var cube in cubes)
             {
                 var newCube = CreateCube(cube);
-                newSet.Cubes.Add(newCube.Item1, newCube.Item2);
+                newSet.Cubes.Add(newCube.Key, newCube.Value);
             }
 
             return newSet;
         }
 
-        public static Tuple<string, int> CreateCube(string cube)
+        public static KeyValuePair<string, int> CreateCube(string cube)
         {
             var split = cube.Split(" ");
             var amount = int.Parse(split[0]);
             var color = split[1].Trim();
 
-            return Tuple.Create(color, amount);
+            return new(color, amount);
         }
     }
 

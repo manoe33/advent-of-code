@@ -113,8 +113,8 @@ namespace AdventOfCode._2023Tests
             var result = Day2_CubeConundrum.CreateCube(cube);
 
             // Assert
-            Assert.Equal("red", result.Item1);
-            Assert.Equal(2, result.Item2);
+            Assert.Equal("red", result.Key);
+            Assert.Equal(2, result.Value);
         }
 
         [Fact]
