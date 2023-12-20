@@ -84,7 +84,6 @@ namespace AdventOfCode._2023
 
         public Game(int id) => Id = id;
 
-        //public bool IsPossible() => Sets.Exists(set => set.HasEnoughCubesInTotal());
         public bool IsPossible() => Sets.TrueForAll(set => set.HasEnoughCubesInTotal());
     }
 
