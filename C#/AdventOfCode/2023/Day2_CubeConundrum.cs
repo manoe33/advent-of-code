@@ -1,12 +1,19 @@
-﻿namespace AdventOfCode._2023
+﻿using System.Drawing;
+using System.Linq;
+
+namespace AdventOfCode._2023
 {
     public static class Day2_CubeConundrum
     {
+        public static int AmountOfRedCubes { get; set; } = 12;
+
+        public static int AmountOfGreenCubes { get; set; } = 13;
+
+        public static int AmountOfBlueCubes { get; set; } = 14;
+
         public static List<Game> Games { get; set; } = new();
 
-        // 12 red cubes
-        // 13 green cubes
-        // 14 blue cubes
+
         public static void Solve()
         {
             Console.WriteLine("Solving cube conundrum!");
@@ -14,9 +21,12 @@
 
             GetGames(lines);
 
-            // now the games are all set and it's time for the exercise
+            var sum = Games
+                .Where(game => game.IsPossible())
+                .Sum(game => game.Id);
 
-            var bla = "";
+
+            Console.WriteLine($"Answer: {sum}");  // 4673 = too high
         }
 
         public static void GetGames(string[] lines)
@@ -48,20 +58,22 @@
             var newSet = new Set();
             var cubes = set.Split(", ");
 
-            // cube = "1 blue"
             foreach (var cube in cubes)
-                newSet.Cubes.Add(CreateCube(cube));
+            {
+                var newCube = CreateCube(cube);
+                newSet.Cubes.Add(newCube.Item1, newCube.Item2);
+            }
 
             return newSet;
         }
 
-        public static Cube CreateCube(string cube)
+        public static Tuple<string, int> CreateCube(string cube)
         {
             var split = cube.Split(" ");
             var amount = int.Parse(split[0]);
             var color = split[1].Trim();
 
-            return new Cube(amount, color);
+            return Tuple.Create(color, amount);
         }
     }
 
@@ -72,25 +84,53 @@
         public List<Set> Sets { get; set; } = new();
 
         public Game(int id) => Id = id;
+
+        public bool IsPossible() => Sets.Exists(set => set.HasEnoughCubesInTotal());
     }
 
     public class Set
     {
-        public List<Cube> Cubes { get; set; } = new();
+        // todo: maybe I should it a dictonary? With the color as key and the amount as value?
+        //public List<Cube> Cubes { get; set; } = new();
+        public Dictionary<string, int> Cubes { get; set; } = new();
+
+        public bool HasEnoughRedCubes() => Cubes.Where(cube => cube.Key == "red").Any(cube => cube.Value <= Day2_CubeConundrum.AmountOfRedCubes);
+
+        public bool HasEnoughGreenCubes() => Cubes.Where(cube => cube.Key == "green").Any(cube => cube.Value <= Day2_CubeConundrum.AmountOfGreenCubes);
+
+        public bool HasEnoughBlueCubes() => Cubes.Where(cube => cube.Key == "blue").Any(cube => cube.Value <= Day2_CubeConundrum.AmountOfBlueCubes);
+
+        public bool HasEnoughCubesInTotal() => HasEnoughRedCubes() && HasEnoughGreenCubes() && HasEnoughBlueCubes();
     }
 
-    public class Cube
-    {
-        public int Amount { get; set; }
+    //public class Cube
+    //{
+    //    public int Amount { get; set; }
 
-        public string Color { get; set; }
+    //    public string Color { get; set; }
 
-        public Cube(int amount, string color)
-        {
-            Amount = amount;
-            Color = color;
-        }
-    }
+    //    public Cube(int amount, string color)
+    //    {
+    //        Amount = amount;
+    //        Color = color;
+    //    }
+
+    //    public bool HasColor(string color) => Color == color;
+
+    //    public bool HasEnoughRedCubes() => HasEnoughCubesByColor(Day2_CubeConundrum.AmountOfRedCubes);
+
+    //    public bool HasEnoughGreenCubes() => HasEnoughCubesByColor(Day2_CubeConundrum.AmountOfGreenCubes);
+
+    //    public bool HasEnoughBlueCubes() => HasEnoughCubesByColor(Day2_CubeConundrum.AmountOfBlueCubes);
+
+    //    public bool HasEnoughCubesByColor(int amount) => Amount <= amount;
+
+    //    public bool HasEnoughCubesInTotal() => HasEnoughRedCubes() && HasEnoughGreenCubes() && HasEnoughBlueCubes();
+    //}
+
+
+
+
 
 
     //public static void Solve()
