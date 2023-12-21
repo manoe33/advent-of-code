@@ -286,7 +286,7 @@ namespace AdventOfCode._2023Tests
         }
 
         [Fact]
-        public void GetMaxRedCubes_ShouldReturnMaxRedCubes()
+        public void SetGetMaxRedCubes_ShouldReturnMaxRedCubes()
         {
             // Arrange
             var set = new Set() { Cubes = new() { { "red", 5 }, { "blue", 3 }, { "green", 2 } } };
@@ -299,7 +299,7 @@ namespace AdventOfCode._2023Tests
         }
 
         [Fact]
-        public void GetMaxGreenCubes_ShouldReturnMaxGreenCubes()
+        public void SetGetMaxGreenCubes_ShouldReturnMaxGreenCubes()
         {
             // Arrange
             var set = new Set() { Cubes = new() { { "red", 5 }, { "blue", 3 }, { "green", 2 } } };
@@ -312,7 +312,7 @@ namespace AdventOfCode._2023Tests
         }
 
         [Fact]
-        public void GetMaxBlueCubes_ShouldReturnMaxBlueCubes()
+        public void SetGetMaxBlueCubes_ShouldReturnMaxBlueCubes()
         {
             // Arrange
             var set = new Set() { Cubes = new() { { "red", 5 }, { "green", 2 } } };
@@ -322,6 +322,107 @@ namespace AdventOfCode._2023Tests
 
             // Assert
             Assert.Equal(0, result);
+        }
+
+        [Fact]
+        public void GameGetMaxRedCubes_ShouldReturnMaxRedCubes()
+        {
+            // Arrange
+            var game = new Game(1);
+            game.Sets.Add(new Set { Cubes = { { "red", 5 }, { "green", 3 }, { "blue", 2 } } });
+            game.Sets.Add(new Set { Cubes = { { "red", 8 }, { "green", 1 }, { "blue", 4 } } });
+            game.Sets.Add(new Set { Cubes = { { "red", 2 }, { "green", 6 }, { "blue", 1 } } });
+
+            // Act
+            var result = game.GetMaxRedCubes();
+
+            // Assert
+            Assert.Equal(8, result);
+        }
+
+        [Fact]
+        public void GameGetMaxGreenCubes_ShouldReturnMaxGreenCubes()
+        {
+            // Arrange
+            var game = new Game(1);
+            game.Sets.Add(new Set { Cubes = { { "red", 5 }, { "green", 3 }, { "blue", 2 } } });
+            game.Sets.Add(new Set { Cubes = { { "red", 8 }, { "green", 1 }, { "blue", 4 } } });
+            game.Sets.Add(new Set { Cubes = { { "red", 2 }, { "green", 6 }, { "blue", 1 } } });
+
+            // Act
+            var result = game.GetMaxGreenCubes();
+
+            // Assert
+            Assert.Equal(6, result);
+        }
+
+        [Fact]
+        public void GameGetMaxBlueCubes_ShouldReturnMaxBlueCubes()
+        {
+            // Arrange
+            var game = new Game(1);
+            game.Sets.Add(new Set { Cubes = { { "red", 5 }, { "green", 3 }, { "blue", 2 } } });
+            game.Sets.Add(new Set { Cubes = { { "red", 8 }, { "green", 1 }, { "blue", 4 } } });
+            game.Sets.Add(new Set { Cubes = { { "red", 2 }, { "green", 6 }, { "blue", 1 } } });
+
+            // Act
+            var result = game.GetMaxBlueCubes();
+
+            // Assert
+            Assert.Equal(4, result);
+        }
+
+        [Fact]
+        public void GetPower_ReturnsCorrectPower()
+        {
+            // Arrange
+            var game = new Game(1);
+            game.Sets.Add(new() { Cubes = new() { { "red", 3 }, { "green", 2 }, { "blue", 4 } } });
+
+            // Act
+            var result = game.GetPower();
+            var expected = 3 * 2 * 4;
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void GetPowers_MultipliesColors()
+        {
+            // Arrange
+            var game = new Game(23);
+            game.Sets.Add(new() { Cubes = new() { { "red", 3 }, { "green", 2 }, { "blue", 4 } } });
+            game.Sets.Add(new() { Cubes = new() { { "red", 31 }, { "green", 12 }, { "blue", 2 } } });
+
+            // Act
+            var result = game.GetPower();
+            var expected = 31 * 12 * 4;
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Part2_Returns_Answers()
+        {
+            // Arrange
+            string[] lines = {
+                "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+                "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue",
+                "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red",
+                "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red",
+                "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"
+            };
+
+            Day2_CubeConundrum.Games.Clear();
+            Day2_CubeConundrum.GetGames(lines);
+
+            // Act
+            var result = Day2_CubeConundrum.Part2();
+
+            // Assert
+            Assert.Equal(2286, result);
         }
     }
 }

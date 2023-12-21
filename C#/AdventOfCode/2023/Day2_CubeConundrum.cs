@@ -17,9 +17,7 @@
             GetGames(lines);
 
             Console.WriteLine($"Answer part1: {Part1()}");  // 2439
-            Console.WriteLine($"Answer part2: {Part2()}");
-
-            // For part 2, get the highest value per set per color.
+            Console.WriteLine($"Answer part2: {Part2()}"); // 63711
         }
 
         public static int Part1()
@@ -32,8 +30,15 @@
 
         public static int Part2()
         {
-            // okay, so now per game we need to get the highest value per color
-            return 0;
+            var sum = 0;
+
+            foreach (var game in Games)
+            {
+                var power = game.GetPower();
+                sum += power;
+            }
+
+            return sum;
         }
 
         public static void GetGames(string[] lines)
@@ -90,6 +95,47 @@
         public Game(int id) => Id = id;
 
         public bool IsPossible() => Sets.TrueForAll(set => set.HasEnoughCubesInTotal());
+
+        public int GetMaxRedCubes()
+        {
+            var max = 0;
+            foreach (var set in Sets)
+            {
+                var maxSet = set.GetMaxRedCubes();
+                if (maxSet > max)
+                    max = maxSet;
+            }
+
+            return max;
+        }
+
+        public int GetMaxGreenCubes()
+        {
+            var max = 0;
+            foreach (var set in Sets)
+            {
+                var maxSet = set.GetMaxGreenCubes();
+                if (maxSet > max)
+                    max = maxSet;
+            }
+
+            return max;
+        }
+
+        public int GetMaxBlueCubes()
+        {
+            var max = 0;
+            foreach (var set in Sets)
+            {
+                var maxSet = set.GetMaxBlueCubes();
+                if (maxSet > max)
+                    max = maxSet;
+            }
+
+            return max;
+        }
+
+        public int GetPower() => GetMaxRedCubes() * GetMaxGreenCubes() * GetMaxBlueCubes();
     }
 
     public class Set
