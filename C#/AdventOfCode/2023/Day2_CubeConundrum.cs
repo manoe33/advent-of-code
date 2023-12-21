@@ -16,16 +16,24 @@
             string[] lines = File.ReadAllLines("inputs/day2.txt");
             GetGames(lines);
 
-            Console.WriteLine($"Answer: {GetSum()}");  // 2439
+            Console.WriteLine($"Answer part1: {Part1()}");  // 2439
+            Console.WriteLine($"Answer part2: {Part2()}");
+
+            // For part 2, get the highest value per set per color.
         }
 
-        public static int GetSum()
+        public static int Part1()
         {
-            // oh wait!! Al sets should be possible
             var possibleGames = Games.Where(game => game.IsPossible());
             var sum = possibleGames.Sum(game => game.Id);
 
             return sum;
+        }
+
+        public static int Part2()
+        {
+            // okay, so now per game we need to get the highest value per color
+            return 0;
         }
 
         public static void GetGames(string[] lines)
@@ -123,5 +131,25 @@
         public static bool HasEnoughCubesForColor(KeyValuePair<string, int> cube, int amount) => cube.Value <= amount;
 
         public bool HasEnoughCubesInTotal() => HasEnoughRedCubes() && HasEnoughGreenCubes() && HasEnoughBlueCubes();
+
+        public int GetMaxRedCubes() => GetMaxCubesByColor("red");
+
+        public int GetMaxGreenCubes() => GetMaxCubesByColor("green");
+
+        public int GetMaxBlueCubes() => GetMaxCubesByColor("blue");
+
+        public int GetMaxCubesByColor(string color)
+        {
+            var cubes = GetCubesByColor(color);
+            return GetMaxCubes(cubes);
+        }
+
+        public static int GetMaxCubes(IEnumerable<KeyValuePair<string, int>> cubes)
+        {
+            if (cubes.ToList().Count > 0)
+                return cubes.Max(cube => cube.Value);
+            else
+                return 0;
+        }
     }
 }

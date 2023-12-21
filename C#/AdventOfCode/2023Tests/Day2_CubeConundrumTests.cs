@@ -62,7 +62,7 @@ namespace AdventOfCode._2023Tests
             var expected = 1 + 48;
 
             // Act
-            var result = Day2_CubeConundrum.GetSum();
+            var result = Day2_CubeConundrum.Part1();
 
             // Assert
             Assert.Equal(expected, result);
@@ -283,6 +283,45 @@ namespace AdventOfCode._2023Tests
 
             // Assert
             Assert.False(result);
+        }
+
+        [Fact]
+        public void GetMaxRedCubes_ShouldReturnMaxRedCubes()
+        {
+            // Arrange
+            var set = new Set() { Cubes = new() { { "red", 5 }, { "blue", 3 }, { "green", 2 } } };
+
+            // Act
+            var result = set.GetMaxRedCubes();
+
+            // Assert
+            Assert.Equal(5, result);
+        }
+
+        [Fact]
+        public void GetMaxGreenCubes_ShouldReturnMaxGreenCubes()
+        {
+            // Arrange
+            var set = new Set() { Cubes = new() { { "red", 5 }, { "blue", 3 }, { "green", 2 } } };
+
+            // Act
+            var result = set.GetMaxGreenCubes();
+
+            // Assert
+            Assert.Equal(2, result);
+        }
+
+        [Fact]
+        public void GetMaxBlueCubes_ShouldReturnMaxBlueCubes()
+        {
+            // Arrange
+            var set = new Set() { Cubes = new() { { "red", 5 }, { "green", 2 } } };
+
+            // Act
+            var result = set.GetMaxBlueCubes();
+
+            // Assert
+            Assert.Equal(0, result);
         }
     }
 }
