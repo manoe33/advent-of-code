@@ -27,10 +27,27 @@ namespace AdventOfCode._2023Tests
             };
 
             // Act
-            int result = Day1_Trebuchet.CalculateCoordinates(lines);
+            int result = Day1_Trebuchet.Part1(lines);
 
             // Assert
             Assert.Equal(142, result);
+        }
+
+        [Fact]
+        public void Bla()
+        {
+            // Arrange
+            var line = "zoneight234";
+
+            // Act
+            var result = Day1_Trebuchet.ExtractDigitsAndText(line);
+
+            // Assert
+            //Assert.Equal("oneeight", result);
+
+
+            // nu vind ie er maar 1, mss toch mss n replace doen?
+            Assert.Null(result);
         }
     }
 }
